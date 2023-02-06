@@ -6,9 +6,10 @@ public class PlayerMovement : MonoBehaviour
 {
     #region Expose
 
-    [SerializeField] float _moveSpeed = 5f;
+    [SerializeField] float _walkSpeed = 5f;
     [SerializeField] float _runSpeed = 10f;
     [SerializeField] int _health = 20;
+    [SerializeField] AnimationCurve _jumpCurve;
 
     #endregion
 
@@ -18,21 +19,19 @@ public class PlayerMovement : MonoBehaviour
     {
         _animator = GetComponentInChildren<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
+        _graphicsTransform = transform.Find("Graphics");
+        
     }
 
     void Start()
     {
-        //float _vertical = Input.GetAxisRaw("Vertical") * _moveSpeed;
-        //float _horizontal = Input.GetAxisRaw("Horizontal") * _moveSpeed;
-        //float maxValue = Mathf.Max(Mathf.Abs(_vertical), Mathf.Abs(_horizontal));
+        
     }
 
     void Update()
     {
         
-        _direction = new Vector2(Input.GetAxisRaw("Horizontal") * _moveSpeed, Input.GetAxisRaw("Vertical") * _moveSpeed);
-        //_direction = new Vector2(maxValue, maxValue);
-
+        _direction = new Vector2(Input.GetAxisRaw("Horizontal") * _walkSpeed, Input.GetAxisRaw("Vertical") * _walkSpeed);
 
         if (Input.GetAxisRaw("Fire3") == 1)
         {
@@ -56,14 +55,14 @@ public class PlayerMovement : MonoBehaviour
     {
         float maxValue = Mathf.Max(Mathf.Abs(_direction.x), Mathf.Abs(_direction.y));
         _animator.SetFloat("moveSpeedX", maxValue);
-        //if (Input.GetAxis("Jump") == 1)
-        //{
-        //    _animator.SetBool("isJumping", true);
-        //}
-        //else
-        //{
-        //    _animator.SetBool("isJumping", false);
-        //}
+        if (Input.GetAxis("Jump") == 1)
+        {
+            _animator.SetBool("isJumping", true);
+        }
+        else
+        {
+            _animator.SetBool("isJumping", false);
+        }
     }
 
     private void TurnCharacter()
@@ -85,6 +84,8 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D _rigidbody;
     Animator _animator;
     Vector2 _direction;
+    Transform _graphicsTransform;
+    float _jumpTimer;
 
     #endregion
 }

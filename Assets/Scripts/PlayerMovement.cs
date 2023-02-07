@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -10,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float _runSpeed = 10f;
     [SerializeField] int _health = 20;
     [SerializeField] AnimationCurve _jumpCurve;
+    [SerializeField] float _jumpHeight = 2f;
+    [SerializeField] float _jumpDuration = 1f;
 
     #endregion
 
@@ -20,30 +23,31 @@ public class PlayerMovement : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _graphicsTransform = transform.Find("Graphics");
-        
+
     }
 
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        
+
         _direction = new Vector2(Input.GetAxisRaw("Horizontal") * _walkSpeed, Input.GetAxisRaw("Vertical") * _walkSpeed);
 
         if (Input.GetAxisRaw("Fire3") == 1)
         {
             _direction = new Vector2(Input.GetAxisRaw("Horizontal") * _runSpeed, Input.GetAxisRaw("Vertical") * _runSpeed);
         }
+        TurnCharacter();
+        Jump();
         ActivateAnimation();
     }
 
     private void FixedUpdate()
     {
         _rigidbody.velocity = _direction;
-        TurnCharacter();
     }
 
 
@@ -55,13 +59,25 @@ public class PlayerMovement : MonoBehaviour
     {
         float maxValue = Mathf.Max(Mathf.Abs(_direction.x), Mathf.Abs(_direction.y));
         _animator.SetFloat("moveSpeedX", maxValue);
-        if (Input.GetAxis("Jump") == 1)
+        if (_isJumping == true)
         {
             _animator.SetBool("isJumping", true);
         }
         else
         {
             _animator.SetBool("isJumping", false);
+        }
+        if (_isLanding)
+        {
+            _animator.SetBool("isLanding", true);
+        }
+        else
+        {
+            _animator.SetBool("isLanding", false);
+        }
+        if (_health <= 0)
+        {
+            _animator.SetInteger("healthPoints", 0);
         }
     }
 
@@ -78,6 +94,36 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void Jump()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            _isLanding = false;
+            _isJumping = true;
+
+        }
+        if (_isJumping == true)
+        {
+            if (_jumpTimer < _jumpDuration)
+            {
+                _jumpTimer += Time.deltaTime;
+
+                // Progression / maximum // Donne le pourcentage restant
+                float curveY = _jumpCurve.Evaluate(_jumpTimer / _jumpDuration);
+
+                _graphicsTransform.localPosition = new Vector2(_graphicsTransform.localPosition.x, curveY * _jumpHeight/*, _graphicsTransform.localPosition.z*/);
+                Debug.Log("timer" + _jumpTimer);
+            }
+
+            else if (_jumpTimer >= _jumpDuration)
+            {
+                _jumpTimer = 0f;
+                _isJumping = false;
+                _isLanding = true;
+            }
+        }
+    }
+
     #endregion
 
     #region Private & Protected
@@ -86,6 +132,9 @@ public class PlayerMovement : MonoBehaviour
     Vector2 _direction;
     Transform _graphicsTransform;
     float _jumpTimer;
+    bool _isJumping;
+    private bool _isLanding;
+
 
     #endregion
 }

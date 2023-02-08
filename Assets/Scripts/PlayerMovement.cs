@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
     #region Expose
-
+    [Header("Movement")]
     [SerializeField] float _walkSpeed = 5f;
     [SerializeField] float _runSpeed = 10f;
-    [SerializeField] int _health = 20;
+    [Header("Jump")]
     [SerializeField] AnimationCurve _jumpCurve;
     [SerializeField] float _jumpHeight = 2f;
     [SerializeField] float _jumpDuration = 1f;
+    [Header("Health")]
+    [SerializeField] float _maxHealth = 20f;
+    [SerializeField] float _health = 20f;
+    [SerializeField] Image _healthBar;
 
     #endregion
 
@@ -33,16 +38,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-
-        _direction = new Vector2(Input.GetAxisRaw("Horizontal") * _walkSpeed, Input.GetAxisRaw("Vertical") * _walkSpeed);
-
-        if (Input.GetAxisRaw("Fire3") == 1)
-        {
-            _direction = new Vector2(Input.GetAxisRaw("Horizontal") * _runSpeed, Input.GetAxisRaw("Vertical") * _runSpeed);
-        }
+        Move();
         TurnCharacter();
         Jump();
+        Hit();
+        Health();
         ActivateAnimation();
+        
     }
 
     private void FixedUpdate()
@@ -55,31 +57,29 @@ public class PlayerMovement : MonoBehaviour
 
     #region Methods
 
-    private void ActivateAnimation()
+    private void Move()
     {
-        float maxValue = Mathf.Max(Mathf.Abs(_direction.x), Mathf.Abs(_direction.y));
-        _animator.SetFloat("moveSpeedX", maxValue);
-        if (_isJumping == true)
+        _direction = new Vector2(Input.GetAxisRaw("Horizontal") * _walkSpeed, Input.GetAxisRaw("Vertical") * _walkSpeed);
+
+        if (Input.GetAxisRaw("Fire3") == 1)
         {
-            _animator.SetBool("isJumping", true);
-        }
-        else
-        {
-            _animator.SetBool("isJumping", false);
-        }
-        if (_isLanding)
-        {
-            _animator.SetBool("isLanding", true);
-        }
-        else
-        {
-            _animator.SetBool("isLanding", false);
-        }
-        if (_health <= 0)
-        {
-            _animator.SetInteger("healthPoints", 0);
+            _direction = new Vector2(Input.GetAxisRaw("Horizontal") * _runSpeed, Input.GetAxisRaw("Vertical") * _runSpeed);
         }
     }
+
+    private void Hit()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            _isFighting = true;
+        }
+        else
+        {
+            _isFighting = false;
+        }
+    }
+
+
 
     private void TurnCharacter()
     {
@@ -111,8 +111,7 @@ public class PlayerMovement : MonoBehaviour
                 // Progression / maximum // Donne le pourcentage restant
                 float curveY = _jumpCurve.Evaluate(_jumpTimer / _jumpDuration);
 
-                _graphicsTransform.localPosition = new Vector2(_graphicsTransform.localPosition.x, curveY * _jumpHeight/*, _graphicsTransform.localPosition.z*/);
-                Debug.Log("timer" + _jumpTimer);
+                _graphicsTransform.localPosition = new Vector2(_graphicsTransform.localPosition.x, curveY * _jumpHeight);
             }
 
             else if (_jumpTimer >= _jumpDuration)
@@ -122,6 +121,26 @@ public class PlayerMovement : MonoBehaviour
                 _isLanding = true;
             }
         }
+
+    }
+
+    private void Health()
+    {
+        if (_health > _maxHealth)
+        {
+            _health = _maxHealth;
+        }
+        _healthBar.fillAmount = _health / _maxHealth;
+    }
+    
+    private void ActivateAnimation()
+    {
+        float maxValue = Mathf.Max(Mathf.Abs(_direction.x), Mathf.Abs(_direction.y));
+        _animator.SetFloat("moveSpeedX", maxValue);
+        _animator.SetBool("isJumping", _isJumping);
+        _animator.SetBool("isLanding", _isLanding);
+        _animator.SetFloat("healthPoints", _health);
+        _animator.SetBool("isFighting", _isFighting);
     }
 
     #endregion
@@ -129,11 +148,16 @@ public class PlayerMovement : MonoBehaviour
     #region Private & Protected
     Rigidbody2D _rigidbody;
     Animator _animator;
+
     Vector2 _direction;
+
     Transform _graphicsTransform;
     float _jumpTimer;
     bool _isJumping;
-    private bool _isLanding;
+    bool _isLanding;
+
+    bool _isFighting;
+
 
 
     #endregion

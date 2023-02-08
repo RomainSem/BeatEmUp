@@ -131,6 +131,10 @@ public class PlayerMovement : MonoBehaviour
             _health = _maxHealth;
         }
         _healthBar.fillAmount = _health / _maxHealth;
+        if (_health <= 0)
+        {
+            _rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
     }
     
     private void ActivateAnimation()

@@ -100,32 +100,34 @@ public class EnnemyBehaviour : MonoBehaviour
     }
 
     void OnStateUpdate()
-    {
+    { 
+        Turn();
         switch (_currentState)
         {
             case EnnemyState.IDLE:
-
-
-                //J'ai détecté le player ET je suis loin de lui
-                if(_playerDetected && !IsTargetNearLimit())
                 {
-                    Turn();
-            
-                    TransitionToState(EnnemyState.WALK);
-                }
 
-                if(IsTargetNearLimit())
-                {
-                    //J'execute ce code quand je suis en IDLE prêt du joueur
-                    //Compteur de seconde
-                    //TransitionToState pour changer quand c'est bon
-                    _attackTimer += Time.deltaTime;
-                    if(_attackTimer >= _waitingTimeBeforeAttack)
-                   {
-                        TransitionToState(EnnemyState.ATTACK);
-                   }
+                    //J'ai détecté le player ET je suis loin de lui
+                    if (_playerDetected && !IsTargetNearLimit())
+                    {
+
+
+                        TransitionToState(EnnemyState.WALK);
+                    }
+
+                    if (IsTargetNearLimit())
+                    {
+                        //J'execute ce code quand je suis en IDLE prêt du joueur
+                        //Compteur de seconde
+                        //TransitionToState pour changer quand c'est bon
+                        _attackTimer += Time.deltaTime;
+                        if (_attackTimer >= _waitingTimeBeforeAttack)
+                        {
+                            TransitionToState(EnnemyState.ATTACK);
+                        }
+                    }
+                    break;
                 }
-                break;
             case EnnemyState.WALK:
 
                 transform.position = Vector2.MoveTowards(transform.position, _moveTarget.position, Time.deltaTime);
@@ -233,14 +235,18 @@ public class EnnemyBehaviour : MonoBehaviour
 
         if (_moveTarget.transform.position.x < transform.position.x)
         {
-            scale.x = Mathf.Abs(scale.x) * -1 * (_flip ? -1 : 1);
-            transform.Translate(_speed * Time.deltaTime, 0, 0);
+            Debug.Log("le playeur est à gauche");
+            _flip = true;
+            scale.x = -1;
+            //transform.Translate(_speed * Time.deltaTime, 0, 0);
 
         }
         else
         {
-            scale.x = Mathf.Abs(scale.x) * (_flip ? -1 : 1);
-            transform.Translate(_speed * Time.deltaTime * -1, 0, 0);
+            Debug.Log("le playeur est à droite");
+            _flip = false;
+            scale.x =1;
+            //transform.Translate(_speed * Time.deltaTime * -1, 0, 0);
         }
         transform.localScale = scale;
     }

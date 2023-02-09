@@ -457,7 +457,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0000054189795, y: -0.5014601, z: -10}
+  m_LocalPosition: {x: 0.00000010019406, y: -0.5014601, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1852,6 +1852,14 @@ PrefabInstance:
       propertyPath: _healthBar
       value: 
       objectReference: {fileID: 296605663}
+    - target: {fileID: 5752215817981242284, guid: 05fcf623de3e13e40b246a96135639c9, type: 3}
+      propertyPath: _jumpHeight
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5752215817981242284, guid: 05fcf623de3e13e40b246a96135639c9, type: 3}
+      propertyPath: _jumpDuration
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05fcf623de3e13e40b246a96135639c9, type: 3}
 --- !u!1001 &8755719067089411783

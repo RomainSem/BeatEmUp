@@ -110,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (_jumpTimer < _jumpDuration)
             {
+                //_rigidbody.constraints = RigidbodyConstraints2D.FreezePositionX;
                 _jumpTimer += Time.deltaTime;
 
                 // Progression / maximum // Donne le pourcentage restant
@@ -123,8 +124,9 @@ public class PlayerMovement : MonoBehaviour
                 _jumpTimer = 0f;
                 _isJumping = false;
                 _isLanding = true;
+                //_rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
             }
-            
+
         }
         //else
         //{

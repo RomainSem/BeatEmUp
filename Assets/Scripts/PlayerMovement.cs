@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float _maxHealth = 20f;
     [SerializeField] float _health = 20f;
     [SerializeField] Image _healthBar;
+    [Header("Cans")]
+    [SerializeField] GameObject _greenCan;
+    [SerializeField] GameObject _redCan;
 
     #endregion
 
@@ -44,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         Hit();
         Health();
         ActivateAnimation();
-        
+
     }
 
     private void FixedUpdate()
@@ -96,9 +100,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        _isLanding = false;
         if (Input.GetButtonDown("Jump"))
         {
-            _isLanding = false;
             _isJumping = true;
 
         }
@@ -120,7 +124,12 @@ public class PlayerMovement : MonoBehaviour
                 _isJumping = false;
                 _isLanding = true;
             }
+            
         }
+        //else
+        //{
+        //    _isLanding = false;
+        //}
 
     }
 
@@ -136,7 +145,7 @@ public class PlayerMovement : MonoBehaviour
         }
         _healthBar.fillAmount = _health / _maxHealth;
     }
-    
+
     private void ActivateAnimation()
     {
         float maxValue = Mathf.Max(Mathf.Abs(_direction.x), Mathf.Abs(_direction.y));
@@ -144,7 +153,17 @@ public class PlayerMovement : MonoBehaviour
         _animator.SetBool("isJumping", _isJumping);
         _animator.SetBool("isLanding", _isLanding);
         _animator.SetFloat("healthPoints", _health);
+        _animator.SetBool("isPickingCanUp", _isPickingCanUp);
         _animator.SetBool("isFighting", _isFighting);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        collider = _greenCan.GetComponent<BoxCollider2D>();
+        if (Input.GetButtonDown("Fire1"))
+        {
+            _isPickingCanUp = true;
+        }
     }
 
     #endregion
@@ -161,6 +180,7 @@ public class PlayerMovement : MonoBehaviour
     bool _isLanding;
 
     bool _isFighting;
+    bool _isPickingCanUp;
 
 
 

@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _walkSpeed: 5
-  _runSpeed: 10
+  _runSpeed: 7
   _jumpCurve:
     serializedVersion: 2
     m_Curve:
@@ -321,4 +321,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   _jumpHeight: 2
   _jumpDuration: 1
+  _maxHealth: 20
   _health: 20
+  _healthBar: {fileID: 0}
+  _greenCan: {fileID: 0}
+  _redCan: {fileID: 0}

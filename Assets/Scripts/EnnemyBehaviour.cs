@@ -258,12 +258,12 @@ public class EnnemyBehaviour : MonoBehaviour
     private bool _playerDetected = false;
     private Transform _moveTarget;
     private float _attackTimer;
-    private Vector3 _scale;
-    private bool _facingRight;
-    Vector2 directionToPlayer;
-    private Rigidbody2D _rigidbody;
+    //private Vector3 _scale;
+    //private bool _facingRight;
+    //Vector2 directionToPlayer;
+    //private Rigidbody2D _rigidbody;
     private bool _flip;
-    private float _speed;
+    //private float _speed;
     
 }
     

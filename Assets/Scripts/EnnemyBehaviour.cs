@@ -144,7 +144,7 @@ public class EnnemyBehaviour : MonoBehaviour
             case EnnemyState.ATTACK:
                 _attackTimer += Time.deltaTime;
                 if(_attackTimer >= _attackDuration)
-                { 
+                {
                     //J'ai fini d'attaquer
                     TransitionToState(EnnemyState.IDLE);
                 }
@@ -196,7 +196,7 @@ public class EnnemyBehaviour : MonoBehaviour
 
     void PlayerDetected()
     {
-        //Debug.Log("J'ai détecté le joueur");
+        Debug.Log("J'ai détecté le joueur");
         _playerDetected = true;
 
     }
@@ -235,7 +235,7 @@ public class EnnemyBehaviour : MonoBehaviour
 
         if (_moveTarget.transform.position.x < transform.position.x)
         {
-            //Debug.Log("le playeur est à gauche");
+            Debug.Log("le playeur est à gauche");
             _flip = true;
             scale.x = -1;
             //transform.Translate(_speed * Time.deltaTime, 0, 0);
@@ -243,9 +243,9 @@ public class EnnemyBehaviour : MonoBehaviour
         }
         else
         {
-            //Debug.Log("le playeur est à droite");
+            Debug.Log("le playeur est à droite");
             _flip = false;
-            scale.x = 1;
+            scale.x =1;
             //transform.Translate(_speed * Time.deltaTime * -1, 0, 0);
         }
         transform.localScale = scale;

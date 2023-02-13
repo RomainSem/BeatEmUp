@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ennemy1
+  - PlayerGraphics
   layers:
   - Default
   - TransparentFX

@@ -12,6 +12,7 @@ public enum EnnemyState
     ATTACK,
     AIRATTACK,
     JUMP,
+    HURT,
     DEAD
 }
 public class EnnemyBehaviour : MonoBehaviour
@@ -38,7 +39,7 @@ public class EnnemyBehaviour : MonoBehaviour
     private void Start()
     {
         TransitionToState(EnnemyState.IDLE);
-        _moveTarget = GameObject.Find("Player").transform;
+        _moveTarget = GameObject.FindGameObjectWithTag("Player").transform;
 
     }
 
@@ -93,6 +94,9 @@ public class EnnemyBehaviour : MonoBehaviour
                 _animator.SetBool("isJumping", true);
                 break;
             default:
+                break;
+            case EnnemyState.HURT:
+                _animator.SetBool("isHurt", true);
                 break;
             case EnnemyState.DEAD:
                 break;

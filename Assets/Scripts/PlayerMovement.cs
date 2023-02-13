@@ -22,6 +22,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Cans")]
     [SerializeField] GameObject _greenCan;
     [SerializeField] GameObject _redCan;
+    [Header("Fight")]
+    [SerializeField] BoxCollider2D _fistCollider;
+
 
     #endregion
 
@@ -32,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _graphicsTransform = transform.Find("Graphics");
+        _enemy = GameObject.FindGameObjectWithTag("Ennemy1");
+
 
     }
 
@@ -76,11 +81,22 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             _isFighting = true;
+            StartCoroutine(Fight());
+
         }
         else
         {
             _isFighting = false;
         }
+    }
+
+    IEnumerator Fight()
+    {
+        yield return new WaitForSeconds(0.1f);
+        _fistCollider.enabled = true;
+        yield return new WaitForSeconds(0.1f);
+        _fistCollider.enabled = false;
+
     }
 
 
@@ -128,10 +144,6 @@ public class PlayerMovement : MonoBehaviour
             }
 
         }
-        //else
-        //{
-        //    _isLanding = false;
-        //}
 
     }
 
@@ -161,12 +173,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        collider = _greenCan.GetComponent<BoxCollider2D>();
-        if (Input.GetButtonDown("Fire1"))
+        if (collider == _greenCan.GetComponent<BoxCollider2D>())
         {
-            _isPickingCanUp = true;
+            if (Input.GetButtonDown("Fire1"))
+            {
+                _isPickingCanUp = true;
+            }
         }
     }
+
 
     #endregion
 
@@ -184,6 +199,7 @@ public class PlayerMovement : MonoBehaviour
     bool _isFighting;
     bool _isPickingCanUp;
 
+    GameObject _enemy;
 
 
     #endregion

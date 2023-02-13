@@ -41,12 +41,16 @@ public class Graphics : MonoBehaviour
             _isEnemyHurt = true;
             _enemy.GetComponent<Enemy>().Health--;
         }
+        else
+        {
+            _isEnemyHurt=false;
+        }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        _isEnemyHurt = false;
-    }
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    _isEnemyHurt = false;
+    //}
 
     private void ActivateAnimations()
     {

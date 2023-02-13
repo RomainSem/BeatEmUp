@@ -80,23 +80,20 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            _isFighting = true;
             StartCoroutine(Fight());
 
         }
-        else
-        {
-            _isFighting = false;
-        }
+        
     }
 
     IEnumerator Fight()
     {
         yield return new WaitForSeconds(0.1f);
         _fistCollider.enabled = true;
+        _isFighting = true;
         yield return new WaitForSeconds(0.1f);
         _fistCollider.enabled = false;
-
+        _isFighting = false;
     }
 
 

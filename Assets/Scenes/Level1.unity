@@ -140,8 +140,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d575ff80068f64340b4c521572a1d60f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 5
-  _maxHealth: 5
+  _health: 10
+  _maxHealth: 15
   _damage: 1
 --- !u!50 &110362314
 Rigidbody2D:

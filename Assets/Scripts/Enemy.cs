@@ -47,7 +47,16 @@ public class Enemy : MonoBehaviour
         {
             _health = _maxHealth;
         }
-        if (_health <= 0)
+    }
+
+    public void TakeDamage()
+    {
+        _health -= _player.GetComponentInParent<PlayerMovement>().Damage;
+        if (_health > 0)
+        {
+            _animator.SetTrigger("isHurting");
+        }
+        else if (_health <= 0)
         {
             _animator.SetBool("isDead", true);
             gameObject.GetComponent<EnnemyBehaviour>().enabled = false;

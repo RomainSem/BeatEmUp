@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject _redCan;
     [Header("Fight")]
     [SerializeField] BoxCollider2D _fistCollider;
+    [SerializeField] byte _damage;
 
 
     #endregion
@@ -35,9 +36,6 @@ public class PlayerMovement : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _graphicsTransform = transform.Find("Graphics");
-        _enemy = GameObject.FindGameObjectWithTag("Ennemy1");
-
-
     }
 
     void Start()
@@ -196,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
     bool _isFighting;
     bool _isPickingCanUp;
 
-    GameObject _enemy;
+    public byte Damage { get => _damage; set => _damage = value; }
 
 
     #endregion

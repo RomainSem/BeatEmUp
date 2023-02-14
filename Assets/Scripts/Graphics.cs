@@ -38,24 +38,18 @@ public class Graphics : MonoBehaviour
     {
         if (collision == _enemyCollider)
         {
-            _isEnemyHurt = true;
-            _enemy.GetComponent<Enemy>().Health--;
-            _enemyAnimator.SetTrigger("isHurting");
-
+            //_isEnemyHurt = true;
+            //_enemy.GetComponent<Enemy>().Health--;
+            //_enemyAnimator.SetTrigger("isHurting");
+            _enemy.GetComponent<Enemy>().TakeDamage();
         }
 
     }
-
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    _isEnemyHurt = false;
-    //}
 
     private void ActivateAnimations()
     {
         //_enemyAnimator.SetBool("isHurt", _isEnemyHurt);
     }
-
 
     #endregion
 

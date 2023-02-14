@@ -99,12 +99,13 @@ public class EnnemyBehaviour : MonoBehaviour
                 _animator.SetBool("isHurt", true);
                 break;
             case EnnemyState.DEAD:
+                _animator.SetBool("isDead", true);
                 break;
         }
     }
 
     void OnStateUpdate()
-    { 
+    {
         Turn();
         switch (_currentState)
         {
@@ -135,10 +136,10 @@ public class EnnemyBehaviour : MonoBehaviour
             case EnnemyState.WALK:
 
                 transform.position = Vector2.MoveTowards(transform.position, _moveTarget.position, Time.deltaTime);
-                
+
                 if (IsTargetNearLimit())
                 {
-                    TransitionToState(EnnemyState.IDLE); 
+                    TransitionToState(EnnemyState.IDLE);
                 }
                 if (!_playerDetected)
                 {
@@ -147,7 +148,7 @@ public class EnnemyBehaviour : MonoBehaviour
                 break;
             case EnnemyState.ATTACK:
                 _attackTimer += Time.deltaTime;
-                if(_attackTimer >= _attackDuration)
+                if (_attackTimer >= _attackDuration)
                 {
                     //J'ai fini d'attaquer
                     TransitionToState(EnnemyState.IDLE);
@@ -159,6 +160,8 @@ public class EnnemyBehaviour : MonoBehaviour
             case EnnemyState.JUMP:
                 break;
             default:
+                break;
+            case EnnemyState.HURT:
                 break;
             case EnnemyState.DEAD:
                 break;
@@ -186,12 +189,16 @@ public class EnnemyBehaviour : MonoBehaviour
                 break;
             default:
                 break;
+            case EnnemyState.HURT:
+                _animator.SetBool("isHurt", false);
+                break;
             case EnnemyState.DEAD:
+                _animator.SetBool("isDead", false);
                 break;
         }
     }
 
-    void TransitionToState(EnnemyState nextState) 
+    void TransitionToState(EnnemyState nextState)
     {
         OnStateExit();
         _currentState = nextState;
@@ -249,7 +256,7 @@ public class EnnemyBehaviour : MonoBehaviour
         {
             Debug.Log("le playeur est à droite");
             _flip = false;
-            scale.x =1;
+            scale.x = 1;
             //transform.Translate(_speed * Time.deltaTime * -1, 0, 0);
         }
         transform.localScale = scale;
@@ -268,7 +275,7 @@ public class EnnemyBehaviour : MonoBehaviour
     //private Rigidbody2D _rigidbody;
     private bool _flip;
     //private float _speed;
-    
+
 }
-    
-    #endregion
+
+#endregion

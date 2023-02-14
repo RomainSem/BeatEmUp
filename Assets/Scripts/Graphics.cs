@@ -40,11 +40,10 @@ public class Graphics : MonoBehaviour
         {
             _isEnemyHurt = true;
             _enemy.GetComponent<Enemy>().Health--;
+            _enemyAnimator.SetTrigger("isHurting");
+
         }
-        else
-        {
-            _isEnemyHurt=false;
-        }
+
     }
 
     //private void OnTriggerExit2D(Collider2D collision)
@@ -54,7 +53,7 @@ public class Graphics : MonoBehaviour
 
     private void ActivateAnimations()
     {
-        _enemyAnimator.SetBool("isHurt", _isEnemyHurt);
+        //_enemyAnimator.SetBool("isHurt", _isEnemyHurt);
     }
 
 

@@ -23,8 +23,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject _greenCan;
     [SerializeField] GameObject _redCan;
     [Header("Fight")]
-    [SerializeField] BoxCollider2D _fistCollider;
-    [SerializeField] byte _damage;
+    [SerializeField] GameObject _fistCollider;
+    [SerializeField] byte _damage = 1;
+    [SerializeField] BoxCollider2D _enemyCollider;
 
 
     #endregion
@@ -86,12 +87,16 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator Fight()
     {
-        yield return new WaitForSeconds(0.1f);
-        _fistCollider.enabled = true;
+        yield return new WaitForSeconds(0.25f);
+        //_fistCollider.enabled = true;
+        _fistCollider.SetActive(true);
         _isFighting = true;
-        yield return new WaitForSeconds(0.1f);
-        _fistCollider.enabled = false;
+        //_enemyCollider.enabled = true;
+        yield return new WaitForSeconds(0.25f);
+        _fistCollider.SetActive(false);
+        //_fistCollider.enabled = false;
         _isFighting = false;
+        //_enemyCollider.enabled = false;
     }
 
 

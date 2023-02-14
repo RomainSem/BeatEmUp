@@ -207,7 +207,6 @@ public class EnnemyBehaviour : MonoBehaviour
 
     void PlayerDetected()
     {
-        Debug.Log("J'ai détecté le joueur");
         _playerDetected = true;
 
     }
@@ -222,42 +221,17 @@ public class EnnemyBehaviour : MonoBehaviour
         return Vector2.Distance(transform.position, _moveTarget.position) < _limitNearTarget;
     }
 
-    /* void Flip()
-     {
-         Vector2 _scale = transform.localScale;
-         _scale.x *= -1;
-         transform.localScale = _scale;
-         _facingRight = !_facingRight;
-
-         if (Vector2.Distance(_moveTarget.position, transform.position) < 10)
-         {
-             transform.position = Vector2.MoveTowards(transform.position, _moveTarget.position, _speed * Time.deltaTime);
-             if (_moveTarget.position.x > transform.position.x && !_facingRight) //if the target is to the right of enemy and the enemy is not facing right
-                 Flip();
-             if (_moveTarget.position.x < transform.position.x && _facingRight)
-                 Flip();
-         }
-
-     }*/
-
     void Turn()
     {
         Vector3 scale = transform.localScale;
 
         if (_moveTarget.transform.position.x < transform.position.x)
         {
-            Debug.Log("le playeur est à gauche");
-            _flip = true;
             scale.x = -1;
-            //transform.Translate(_speed * Time.deltaTime, 0, 0);
-
         }
         else
         {
-            Debug.Log("le playeur est à droite");
-            _flip = false;
             scale.x = 1;
-            //transform.Translate(_speed * Time.deltaTime * -1, 0, 0);
         }
         transform.localScale = scale;
     }
@@ -269,13 +243,6 @@ public class EnnemyBehaviour : MonoBehaviour
     private bool _playerDetected = false;
     private Transform _moveTarget;
     private float _attackTimer;
-    //private Vector3 _scale;
-    //private bool _facingRight;
-    //Vector2 directionToPlayer;
-    //private Rigidbody2D _rigidbody;
-    private bool _flip;
-    //private float _speed;
-
 }
 
 #endregion

@@ -33,7 +33,6 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         Life();
-        Debug.Log(_health);
     }
 
 
@@ -55,13 +54,28 @@ public class Enemy : MonoBehaviour
         if (_health > 0)
         {
             _animator.SetTrigger("isHurting");
+            Debug.Log(_health);
         }
         else if (_health <= 0)
         {
             _animator.SetBool("isDead", true);
             gameObject.GetComponent<EnnemyBehaviour>().enabled = false;
             gameObject.GetComponentInChildren<BoxCollider2D>().enabled = false;
+            StartCoroutine(EnemyDeath());
         }
+    }
+
+    IEnumerator EnemyDeath()
+    {
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < 6; i++)
+        {
+            yield return new WaitForSeconds(0.2f);
+            GetComponentInChildren<SpriteRenderer>().enabled = false;
+            yield return new WaitForSeconds(0.2f);
+            GetComponentInChildren<SpriteRenderer>().enabled = true;
+        }
+        Destroy(gameObject);
     }
 
     #endregion

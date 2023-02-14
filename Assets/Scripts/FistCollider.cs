@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Graphics : MonoBehaviour
+public class FistCollider : MonoBehaviour
 {
     #region Expose
 
-    
+
     #endregion
 
     #region Unity Lyfecycle
@@ -15,8 +15,9 @@ public class Graphics : MonoBehaviour
     {
         _enemy = GameObject.FindGameObjectWithTag("Ennemy1");
         _enemyCollider = _enemy.GetComponentInChildren<Collider2D>();
-        _enemyRGBody = _enemy.GetComponent<Rigidbody2D>();
         _enemyAnimator = _enemyCollider.GetComponent<Animator>();
+
+
     }
 
     void Start()
@@ -26,7 +27,7 @@ public class Graphics : MonoBehaviour
 
     void Update()
     {
-        //ActivateAnimations();
+
     }
 
 
@@ -34,23 +35,26 @@ public class Graphics : MonoBehaviour
 
     #region Methods
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision == _enemyCollider)
-    //    {
-    //        //_isEnemyHurt = true;
-    //        //_enemy.GetComponent<Enemy>().Health--;
-    //        //_enemyAnimator.SetTrigger("isHurting");
-    //        _enemy.GetComponent<Enemy>().TakeDamage();
-    //        Debug.Log("ENTER");
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("ENTER1");
+        if (collision.CompareTag("Ennemy1"))
+        {
+            _isEnemyHurt = true;
+            //_enemy.GetComponent<Enemy>().Health--;
+            _enemyAnimator.SetTrigger("isHurting");
+            _enemy.GetComponent<Enemy>().TakeDamage();
+            Debug.Log("Enemy Enter");
+        }
 
-    //    }
-
-    //}
+    }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("EXIT");
+        if (collision.CompareTag("Ennemy1"))
+        {
+            Debug.Log("EXIT");
+        }
     }
 
     #endregion
@@ -59,9 +63,8 @@ public class Graphics : MonoBehaviour
 
     GameObject _enemy;
     Collider2D _enemyCollider;
-    Rigidbody2D _enemyRGBody;
-    Animator _enemyAnimator;
     bool _isEnemyHurt;
+    Animator _enemyAnimator;
 
     #endregion
 }

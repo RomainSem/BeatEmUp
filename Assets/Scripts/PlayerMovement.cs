@@ -23,9 +23,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject _greenCan;
     [SerializeField] GameObject _redCan;
     [Header("Fight")]
-    [SerializeField] GameObject _fistCollider;
+    [SerializeField] GameObject _fistColliderObj;
     [SerializeField] byte _damage = 1;
     [SerializeField] BoxCollider2D _enemyCollider;
+    [SerializeField] BoxCollider2D _fistCollider;
 
 
     #endregion
@@ -41,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-
+        _fistCollider.enabled = false;
     }
 
     void Update()
@@ -79,24 +80,27 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            StartCoroutine(Fight());
+            if (_isFighting == false)
+            {
+                StartCoroutine(FightCoroutine());
+            }
 
         }
-        
+
     }
 
-    IEnumerator Fight()
+    IEnumerator FightCoroutine()
     {
-        yield return new WaitForSeconds(0.25f);
-        //_fistCollider.enabled = true;
-        _fistCollider.SetActive(true);
+        //yield return new WaitForSeconds(0.25f);
         _isFighting = true;
-        //_enemyCollider.enabled = true;
-        yield return new WaitForSeconds(0.25f);
-        _fistCollider.SetActive(false);
-        //_fistCollider.enabled = false;
+        _fistCollider.enabled = true;
+        Debug.Log("Activation collider du poing");
+        //_fistCollider.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        //_fistColliderObj.SetActive(false);
         _isFighting = false;
-        //_enemyCollider.enabled = false;
+        _fistCollider.enabled = false;
+        Debug.Log("Desactivation collider du poing");
     }
 
 
@@ -113,6 +117,18 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
     }
+
+    //private void Fight()
+    //{
+    //    if (_isFighting)
+    //    {
+    //        _fistColliderObj.SetActive(true);
+    //    }
+    //    else
+    //    {
+    //        _fistColliderObj.SetActive(false);
+    //    }
+    //}
 
     private void Jump()
     {
@@ -171,16 +187,16 @@ public class PlayerMovement : MonoBehaviour
         _animator.SetBool("isFighting", _isFighting);
     }
 
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
-        if (collider == _greenCan.GetComponent<BoxCollider2D>())
-        {
-            if (Input.GetButtonDown("Fire1"))
-            {
-                _isPickingCanUp = true;
-            }
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collider)
+    //{
+    //    if (collider == _greenCan.GetComponent<BoxCollider2D>())
+    //    {
+    //        if (Input.GetButtonDown("Fire1"))
+    //        {
+    //            _isPickingCanUp = true;
+    //        }
+    //    }
+    //}
 
 
     #endregion
@@ -198,6 +214,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool _isFighting;
     bool _isPickingCanUp;
+
 
     public byte Damage { get => _damage; set => _damage = value; }
 

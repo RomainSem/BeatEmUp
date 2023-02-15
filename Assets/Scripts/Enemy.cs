@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float _health = 5f;
     [SerializeField] float _maxHealth = 5f;
     [SerializeField] byte _damage = 1;
+    [SerializeField] int _scoreGiven = 20;
 
 
     #endregion
@@ -19,9 +20,7 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody2D>();
         _player = GameObject.FindGameObjectWithTag("PlayerGraphics");
-        _playerFistCollider = _player.GetComponent<Collider2D>();
         _animator = GetComponentInChildren<Animator>();
     }
 
@@ -62,6 +61,7 @@ public class Enemy : MonoBehaviour
             gameObject.GetComponent<EnnemyBehaviour>().enabled = false;
             gameObject.GetComponentInChildren<BoxCollider2D>().enabled = false;
             StartCoroutine(EnemyDeath());
+            GameObject.Find("GameManager").GetComponent<GameManager>().Score += _scoreGiven;
         }
     }
 
@@ -82,14 +82,11 @@ public class Enemy : MonoBehaviour
 
     #region Private & Protected
 
-    Rigidbody2D _rigidbody;
-    Collider2D _playerFistCollider;
     Animator _animator;
     GameObject _player;
 
     public byte Damage { get => _damage; set => _damage = value; }
     public float Health { get => _health; set => _health = value; }
-
 
     #endregion
 }

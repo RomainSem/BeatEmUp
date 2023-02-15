@@ -48,11 +48,6 @@ public class Graphics : MonoBehaviour
 
     //}
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        Debug.Log("EXIT");
-    }
-
     #endregion
 
     #region Private & Protected

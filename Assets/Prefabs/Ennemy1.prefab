@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2027585574}
   - component: {fileID: 2027585575}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4268748701222459436}
   - component: {fileID: 4268748701222459437}
-  m_Layer: 0
+  - component: {fileID: 110362314}
+  - component: {fileID: 110362315}
+  - component: {fileID: 110362313}
+  m_Layer: 7
   m_Name: Ennemy1
   m_TagString: Ennemy1
   m_Icon: {fileID: 0}
@@ -132,9 +135,71 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 4268748701451359885}
-  _limitNearTarget: 0.2
-  _waitingTimeBeforeAttack: 1
+  _limitNearTarget: 0.5
+  _waitingTimeBeforeAttack: 0.5
   _attackDuration: 0.2
+--- !u!50 &110362314
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4268748701222459439}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!61 &110362315
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4268748701222459439}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 1.02}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 2, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.68, y: 1.2}
+  m_EdgeRadius: 0
+--- !u!114 &110362313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4268748701222459439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d575ff80068f64340b4c521572a1d60f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 10
+  _maxHealth: 15
+  _damage: 1
 --- !u!1 &4268748701451359884
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,8 +211,7 @@ GameObject:
   - component: {fileID: 4268748701451359883}
   - component: {fileID: 4268748701451359882}
   - component: {fileID: 4268748701451359885}
-  - component: {fileID: 4268748701451359881}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Graphics
   m_TagString: Ennemy1
   m_Icon: {fileID: 0}
@@ -241,32 +305,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!61 &4268748701451359881
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4268748701451359884}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1.02}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 2, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.68, y: 1.2}
-  m_EdgeRadius: 0
 --- !u!1 &4268748702387386193
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +316,7 @@ GameObject:
   - component: {fileID: 4268748702387386158}
   - component: {fileID: 4268748702387386159}
   - component: {fileID: 4268748702387386156}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -315,7 +353,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 3.04
+  m_Radius: 50
 --- !u!114 &4268748702387386156
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     #region Expose
 
+    [SerializeField] TextMeshProUGUI _scoreTxt;
     
     #endregion
 
@@ -26,9 +28,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         ReloadScene();
+        _scoreTxt.text = _score.ToString();
     }
 
-    
+
     #endregion
 
     #region Methods
@@ -44,6 +47,10 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Private & Protected
+
+    int _score = 000000;
+
+    public int Score { get => _score; set => _score = value; }
 
     #endregion
 }

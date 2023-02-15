@@ -13,9 +13,10 @@ public class FistCollider : MonoBehaviour
 
     private void Awake()
     {
+        _collider = GetComponent<BoxCollider2D>();
         _enemy = GameObject.FindGameObjectWithTag("Ennemy1");
         _enemyCollider = _enemy.GetComponentInChildren<Collider2D>();
-        _enemyAnimator = _enemyCollider.GetComponent<Animator>();
+        _enemyAnimator = _enemy.GetComponentInChildren<Animator>();
 
 
     }
@@ -41,19 +42,26 @@ public class FistCollider : MonoBehaviour
         if (collision.CompareTag("Ennemy1"))
         {
             _isEnemyHurt = true;
+            if (_isEnemyHurt)
+            {
+                _enemyAnimator.SetTrigger("isHurting");
+                _enemy.GetComponent<Enemy>().TakeDamage();
+                Debug.Log("Enemy Enter");
+            }
             //_enemy.GetComponent<Enemy>().Health--;
-            _enemyAnimator.SetTrigger("isHurting");
-            _enemy.GetComponent<Enemy>().TakeDamage();
-            Debug.Log("Enemy Enter");
         }
 
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        _isEnemyHurt = false;
         if (collision.CompareTag("Ennemy1"))
         {
-            Debug.Log("EXIT");
+            if (_isEnemyHurt == false)
+            {
+                Debug.Log("EXIT");
+            }
         }
     }
 
@@ -65,6 +73,6 @@ public class FistCollider : MonoBehaviour
     Collider2D _enemyCollider;
     bool _isEnemyHurt;
     Animator _enemyAnimator;
-
+    BoxCollider2D _collider;
     #endregion
 }

@@ -53,6 +53,22 @@ public class FistCollider : MonoBehaviour
 
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        Debug.Log("Stay");
+        if (collision.CompareTag("Ennemy1"))
+        {
+            _isEnemyHurt = true;
+            if (_isEnemyHurt)
+            {
+                _enemyAnimator.SetTrigger("isHurting");
+                _enemy.GetComponent<Enemy>().TakeDamage();
+                Debug.Log("Enemy Enter stay");
+            }
+            //_enemy.GetComponent<Enemy>().Health--;
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         _isEnemyHurt = false;

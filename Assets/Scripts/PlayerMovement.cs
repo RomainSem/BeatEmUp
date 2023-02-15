@@ -91,12 +91,12 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator FightCoroutine()
     {
-        //yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.25f);
         _isFighting = true;
         _fistCollider.enabled = true;
         Debug.Log("Activation collider du poing");
         //_fistCollider.SetActive(true);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.25f);
         //_fistColliderObj.SetActive(false);
         _isFighting = false;
         _fistCollider.enabled = false;
@@ -117,18 +117,6 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
     }
-
-    //private void Fight()
-    //{
-    //    if (_isFighting)
-    //    {
-    //        _fistColliderObj.SetActive(true);
-    //    }
-    //    else
-    //    {
-    //        _fistColliderObj.SetActive(false);
-    //    }
-    //}
 
     private void Jump()
     {
